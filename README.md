@@ -94,6 +94,42 @@ stickyHeaderIndices={[0]}代表第1位的item在滚动时可以固定在头部�
             </View>
         );
     }
-<br>示例中在contentContainerStyle中可以利用flex布局打造类似于android中的GridView类似的结构，十分高效。
+<br>示例中在contentContainerStyle中可以利用flex布局打造类似于android中的GridView类似的结构，十分高效。<br>
+
+4.下拉刷新
+---------
+
+ReactNative的下拉刷新也是借助另外一个控件，refreshControl,使用也非常简单。值得注意的是ios和android的refreshControl有很多属性和方法都不通用，而且显示效果也并不相投，这里列出一个ios的示例。<br>代码：
+        
+    render() {
+        return (
+            <View style={{flex:1,paddingTop:50}}>
+            <ListView dataSource={this.state.dataSource}
+                      contentContainerStyle={{flexWrap:'wrap',flexDirection:'row',justifyContent:'space-around'}}
+                      renderRow={(rowData, sectionID, rowID, highlightRow) =>
+                      <View style={{height:40, margin:10}}>
+                          <Text onPress={()=>{
+                              highlightRow:(sectionID,rowID)
+                          }}>{rowData}</Text>
+                      </View>
+                      }
+                      refreshControl={
+                          <RefreshControl
+                              refreshing={this.state.isRefreshing}
+                              onRefresh={this._onRefresh}
+                              tintColor='red'
+                              title="正在刷新"/>
+                      }
+
+            />
+            </View>
+        );
+    }
+    _onRefresh=()=>{
+        this.setState({
+            isRefreshing:true,
+        });
+    }
+<br>刷新界面的联网操作可以放在_onRefresh()中执行。
                       
                   
