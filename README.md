@@ -69,6 +69,31 @@ stickyHeaderIndices；<br>
         );
     }
 <br>
-stickyHeaderIndices={[0]}代表第1位的item在滚动时可以固定在头部，若参数为多个，stickyHeaderIndices={[0,2]}则代表第1位先固定在头部，直到第三位item达到顶部时取代它。
+stickyHeaderIndices={[0]}代表第1位的item在滚动时可以固定在头部，若参数为多个，stickyHeaderIndices={[0,2]}则代表第1位先固定在头部，直到第三位item达到顶部时取代它。<br>
+
+3.更复杂的排列
+----------
+由于ListView是直接继承于ScrollView的，所以拥有ScrollView的所有属性和方法。contentContainerStyle就可以为我们打造更加复杂的item排列方式.<br>代码：
+
+
+        render() {
+        return (
+            <View style={{flex:1,paddingTop:50}}>
+            <ListView dataSource={this.state.dataSource}
+                      contentContainerStyle={{flexWrap:'wrap',flexDirection:'row',justifyContent:'space-around'}}
+                      renderRow={(rowData, sectionID, rowID, highlightRow) =>
+                      <View style={{height:40, margin:10}}>
+                          <Text onPress={()=>{
+                              highlightRow:(sectionID,rowID)
+                          }}>{rowData}</Text>
+                      </View>
+                      }
+
+
+            />
+            </View>
+        );
+    }
+<br>示例中在contentContainerStyle中可以利用flex布局打造类似于android中的GridView类似的结构，十分高效。
                       
                   
