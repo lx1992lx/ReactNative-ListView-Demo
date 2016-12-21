@@ -42,4 +42,33 @@
     }
 
 
-    AppRegistry.registerComponent('Hello', () => Hello);
+    AppRegistry.registerComponent('Hello', () => Hello);
+    
+    
+    
+其中renderSectionHeader中的两个参数sectionData和sectionId都可以作为粘性标题，sectionData为当前组的所有数据，sectionID则是当前组的标题。建议使用sectionId作为粘性标题。
+2.粘性头部(ios)
+---------
+
+stickyHeaderIndices；<br>
+此方法为ios专有，并且无法与renderSectionHeader共同使用。<br>代码：<br>
+
+
+    render() {
+        return (
+            <View style={{flex:1,paddingTop:50}}>
+            <ListView dataSource={this.state.dataSource}
+                      renderRow={(rowData) =>
+                      <View>
+                          <Text>{rowData}</Text>
+                      </View>
+                      }
+                      stickyHeaderIndices={[0,2]}
+            />
+            </View>
+        );
+    }
+<br>
+stickyHeaderIndices={[0]}代表第1位的item在滚动时可以固定在头部，若参数为多个，stickyHeaderIndices={[0,2]}则代表第1位先固定在头部，直到第三位item达到顶部时取代它。
+                      
+                  
